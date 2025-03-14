@@ -1,26 +1,32 @@
-resource "aws_vpc" "main" {
-    cidr_block = "10.0.0.0/16"
+resource "aws_vpc" "rjhxa_gsg_vpc" {
+    cidr_block = var.vpc_cidr
+
     tags = {
-        Name  = "Main-VPC"
-        Owner = "Rafael_Gabriel"
+        Name   = "rjhxa_gsg_vpc"
+        Aluno  = "rjhxa_gsg"
+        Periodo = "8"
     }
 }
 
-resource "aws_subnet" "public" {
-    vpc_id                  = aws_vpc.main.id
-    cidr_block              = "10.0.1.0/24"
+resource "aws_subnet" "rjhxa_gsg_public" {
+    vpc_id                  = aws_vpc.rjhxa_gsg_vpc.id
+    cidr_block              = var.public_subnet_cidr
     map_public_ip_on_launch = true
+
     tags = {
-        Name  = "Public-Subnet"
-        Owner = "Rafael_Gabriel"
+        Name   = "rjhxa_gsg_public_subnet"
+        Aluno  = "rjhxa_gsg"
+        Periodo = "8"
     }
 }
 
-resource "aws_subnet" "private" {
-    vpc_id     = aws_vpc.main.id
-    cidr_block = "10.0.2.0/24"
+resource "aws_subnet" "rjhxa_gsg_private" {
+    vpc_id     = aws_vpc.rjhxa_gsg_vpc.id
+    cidr_block = var.private_subnet_cidr
+
     tags = {
-        Name  = "Private-Subnet"
-        Owner = "Rafael_Gabriel"
+        Name   = "rjhxa_gsg_private_subnet"
+        Aluno  = "rjhxa_gsg"
+        Periodo = "8"
     }
 }

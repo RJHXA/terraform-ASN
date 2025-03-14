@@ -1,16 +1,18 @@
-resource "aws_db_instance" "rds" {
-    allocated_storage    = 20
-    db_name              = "mydb"
-    engine              = "mysql"
-    instance_class       = "db.t2.micro"
-    username            = "admin"
-    password            = "terraformpass"
-    vpc_security_group_ids = [var.ec2_sg_id]
-    db_subnet_group_name = aws_db_subnet_group.main.id
-    publicly_accessible  = false
+resource "aws_db_instance" "rjhxa_gsg_rds" {
+    allocated_storage = 20
+    engine            = "mysql"
+    engine_version    = "8.0"
+    instance_class    = "db.t2.micro"
+    identifier        = "rjhxa-gsg-rds"
+    username         = "admin"
+    password         = "password123"
+    publicly_accessible = false
+    skip_final_snapshot = true
+    vpc_security_group_ids = [var.security_group_rds]
 
     tags = {
-        Name  = "RDS-MySQL"
-        Owner = "Rafael_Gabriel"
+        Name   = "rjhxa_gsg_rds"
+        Aluno  = "rjhxa_gsg"
+        Periodo = "8"
     }
 }
