@@ -2,7 +2,7 @@ resource "aws_instance" "rjhxa_gsg_ec2" {
     ami           = "ami-0b6d6dacf350ebc82"
     instance_type = var.instance_type
     subnet_id     = module.vpc.public_subnet_id
-    security_groups = [aws_security_group.rjhxa_gsg_sg_ec2]
+    security_groups = [module.security_group.sg_name_web]
 
     user_data = <<-EOF
                 #!/bin/bash
@@ -17,4 +17,8 @@ resource "aws_instance" "rjhxa_gsg_ec2" {
         Aluno  = "rjhxa_gsg"
         Periodo = "8"
     }
+}
+
+output "public_ip" {
+    value = aws_instance.web_server.public_ip
 }

@@ -1,5 +1,6 @@
 resource "aws_security_group" "rjhxa_gsg_sg_ec2" {
-    vpc_id = var.vpc_id
+    vpc_id = module.vpc.vpc_id
+    name = "Allow HTTP"
 
     ingress {
         from_port   = 80
@@ -16,7 +17,8 @@ resource "aws_security_group" "rjhxa_gsg_sg_ec2" {
 }
 
 resource "aws_security_group" "rjhxa_gsg_sg_rds" {
-    vpc_id = var.vpc_id
+    vpc_id = module.vpc.vpc_id
+    name = "Allow 3306"
 
     ingress {
         from_port       = 3306
@@ -30,4 +32,12 @@ resource "aws_security_group" "rjhxa_gsg_sg_rds" {
         Aluno  = "rjhxa_gsg"
         Periodo = "8"
     }
+}
+
+output "sg_name_web" {
+    value = aws_security_group.rjhxa_gsg_sg_ec2.name
+}
+
+output "sg_name_rds" {
+    value = aws_security_group.rjhxa_gsg_sg_rds.name
 }

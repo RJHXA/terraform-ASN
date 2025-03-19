@@ -20,5 +20,5 @@ variable "private_subnet_cidr" {
 
 variable "instance_type" {
     description = "Tipo da instância EC2"
-    default     = "t2.micro"
+    default     = "t3.micro"
 }

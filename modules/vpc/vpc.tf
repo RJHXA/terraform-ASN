@@ -30,3 +30,15 @@ resource "aws_subnet" "rjhxa_gsg_private" {
         Periodo = "8"
     }
 }
+
+output "vpc_id" {
+    value = aws_vpc.rjhxa_gsg_vpc.id
+}
+
+output "public_subnet_id" {
+    value = aws_subnet.rjhxa_gsg_public.id
+}
+
+output "private_subnet_id" {
+    value = aws_subnet.rjhxa_gsg_private.id
+}

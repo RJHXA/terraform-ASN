@@ -8,11 +8,15 @@ resource "aws_db_instance" "rjhxa_gsg_rds" {
     password         = "password123"
     publicly_accessible = false
     skip_final_snapshot = true
-    vpc_security_group_ids = [var.security_group_rds]
+    vpc_security_group_ids = [module.security_group.rjhxa_gsg_sg_rds.id]
 
     tags = {
         Name   = "rjhxa_gsg_rds"
         Aluno  = "rjhxa_gsg"
         Periodo = "8"
     }
+}
+
+output "rds_endpoint" {
+    value = aws_db_instance.rjhxa_gsg_rds.endpoint
 }
