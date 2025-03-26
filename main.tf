@@ -1,5 +1,9 @@
 module "vpc" {
     source = "./modules/vpc"
+    vpc_cidr = var.vpc_cidr
+    public_subnet_cidr = var.public_subnet_cidr
+    private_1_subnet_cidr = var.private_1_subnet_cidr
+    private_2_subnet_cidr = var.private_2_subnet_cidr
 }
 
 module "security_group" {
@@ -7,13 +11,17 @@ module "security_group" {
     vpc_id = module.vpc.vpc_id
 }
 
-module "ec2" {
-    source             = "./modules/ec2"
-    public_subnet_id   = module.vpc.public_subnet_id
-    security_group_ec2 = module.security_group.security_group_ec2_id
+module "auto_scaling_group" {
+    source = "./modules/auto_scaling_group"
+    vpc_id = module.vpc.vpc_id
+    ami_id = var.ami_id
+    ec2_public_sg_id = module.security_group.sg_public_id
+    public_subnet_id = module.vpc.public_subnet_id
+    private_1_subnet_id = module.vpc.private_1_subnet_id
+    private_2_subnet_id = module.vpc.private_2_subnet_id
 }
 
 module "rds" {
     source             = "./modules/rds"
-    security_group_rds = module.security_group.security_group_rds_id
+    sg_rds_id = module.security_group.sg_rds_id
 }

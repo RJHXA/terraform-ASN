@@ -1,20 +1,22 @@
 resource "aws_db_instance" "rjhxa_gsg_rds" {
-    allocated_storage = 20
-    engine            = "mysql"
-    engine_version    = "8.0"
-    instance_class    = "db.t2.micro"
-    identifier        = "rjhxa-gsg-rds"
-    username         = "admin"
-    password         = "password123"
-    publicly_accessible = false
-    skip_final_snapshot = true
-    vpc_security_group_ids = [module.security_group.rjhxa_gsg_sg_rds.id]
+  identifier             = "mysql-instance"
+  allocated_storage      = 20
+  storage_type           = "gp2"
+  engine                = "mysql"
+  engine_version        = "8.0"
+  instance_class        = "db.t3.micro"
+  db_name               = "mydatabase"
+  username             = "mysql"
+  password             = "password"
+  publicly_accessible   = false
+  vpc_security_group_ids = [var.sg_rds_id]
+  backup_retention_period = 7
+  skip_final_snapshot   = true
 
-    tags = {
-        Name   = "rjhxa_gsg_rds"
-        Aluno  = "rjhxa_gsg"
-        Periodo = "8"
-    }
+  tags = {
+    Name    = "mysql-instance"
+    project = "rjhxa_gsg"
+  }
 }
 
 output "rds_endpoint" {

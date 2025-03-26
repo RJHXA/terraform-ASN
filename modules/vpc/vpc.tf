@@ -20,9 +20,9 @@ resource "aws_subnet" "rjhxa_gsg_public" {
     }
 }
 
-resource "aws_subnet" "rjhxa_gsg_private" {
+resource "aws_subnet" "rjhxa_gsg_private_1" {
     vpc_id     = aws_vpc.rjhxa_gsg_vpc.id
-    cidr_block = var.private_subnet_cidr
+    cidr_block = var.private_1_subnet_cidr
 
     tags = {
         Name   = "rjhxa_gsg_private_subnet"
@@ -31,14 +31,13 @@ resource "aws_subnet" "rjhxa_gsg_private" {
     }
 }
 
-output "vpc_id" {
-    value = aws_vpc.rjhxa_gsg_vpc.id
-}
+resource "aws_subnet" "rjhxa_gsg_private_2" {
+    vpc_id     = aws_vpc.rjhxa_gsg_vpc.id
+    cidr_block = var.private_2_subnet_cidr
 
-output "public_subnet_id" {
-    value = aws_subnet.rjhxa_gsg_public.id
-}
-
-output "private_subnet_id" {
-    value = aws_subnet.rjhxa_gsg_private.id
+    tags = {
+        Name   = "rjhxa_gsg_private_subnet"
+        Aluno  = "rjhxa_gsg"
+        Periodo = "8"
+    }
 }

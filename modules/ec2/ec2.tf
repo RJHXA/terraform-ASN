@@ -1,24 +1,25 @@
-resource "aws_instance" "rjhxa_gsg_ec2" {
-    ami           = "ami-0b6d6dacf350ebc82"
-    instance_type = var.instance_type
-    subnet_id     = module.vpc.public_subnet_id
-    security_groups = [module.security_group.sg_name_web]
+resource "aws_instance" "public_ec2" {
+  ami           = "ami-0b6d6dacf350ebc82"
+  instance_type = "t2.micro"
+  subnet_id     = var.public_subnet_id
+  vpc_security_group_ids = [var.ec2_public_sg_id]
+  user_data     = file("${path.module}/user_data.sh")
 
-    user_data = <<-EOF
-                #!/bin/bash
-                sudo yum update -y
-                sudo yum install -y httpd
-                sudo systemctl start httpd
-                sudo systemctl enable httpd
-                EOF
-
-    tags = {
-        Name   = "rjhxa_gsg_ec2"
-        Aluno  = "rjhxa_gsg"
-        Periodo = "8"
-    }
+  tags = {
+    Name    = "Public-EC2"
+    project = "rjhxa_gsg"
+  }
 }
 
-output "public_ip" {
-    value = aws_instance.web_server.public_ip
+resource "aws_instance" "private_ec2" {
+  ami           = "ami-0b6d6dacf350ebc82"
+  instance_type = "t2.micro"
+  subnet_id     = var.private_subnet_id
+  vpc_security_group_ids = [var.ec2_private_sg_id]
+  user_data     = file("${path.module}/user_data.sh")
+
+  tags = {
+    Name    = "Private-EC2"
+    project = "rjhxa_gsg"
+  }
 }
