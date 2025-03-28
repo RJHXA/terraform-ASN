@@ -9,7 +9,7 @@ variable "vpc_cidr" {
 }
 
 variable "public_subnet_cidr" {
-    description = "Bloco CIDR da Subnet Pública"
+    description = "Bloco CIDR da Subnet Publica"
     default     = "172.31.1.0/24"
 }
 

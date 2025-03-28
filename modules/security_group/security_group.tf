@@ -1,6 +1,6 @@
 resource "aws_security_group" "ec2_public_sg" {
   name        = "ec2-public-sg"
-  description = "Security Group para a EC2 pública"
+  description = "Security Group para a EC2 publica"
   vpc_id      = var.vpc_id
 
   ingress {

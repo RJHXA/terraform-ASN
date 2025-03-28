@@ -38,7 +38,6 @@ resource "aws_autoscaling_group" "asg" {
   min_size            = 1
   max_size            = 2
   vpc_zone_identifier = [
-    var.public_subnet_id,
     var.private_1_subnet_id,
     var.private_2_subnet_id
   ]
