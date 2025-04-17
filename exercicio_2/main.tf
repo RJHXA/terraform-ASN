@@ -21,11 +21,12 @@ module "auto_scaling_group" {
     public_2_subnet_id = module.vpc.public_2_subnet_id
     private_1_subnet_id = module.vpc.private_1_subnet_id
     private_2_subnet_id = module.vpc.private_2_subnet_id
+    sg_alb_id = module.security_group.sg_alb_id
 }
 
-module "rds" {
-    source             = "./modules/rds"
-    sg_rds_id = module.security_group.sg_rds_id
-    private_1_subnet_id = module.vpc.private_1_subnet_id
-    private_2_subnet_id = module.vpc.private_2_subnet_id
-}
+# module "rds" {
+#     source             = "./modules/rds"
+#     sg_rds_id = module.security_group.sg_rds_id
+#     private_1_subnet_id = module.vpc.private_1_subnet_id
+#     private_2_subnet_id = module.vpc.private_2_subnet_id
+# }

@@ -14,6 +14,30 @@ resource "aws_launch_template" "asg_launch_template" {
   }
 }
 
+resource "aws_lb" "asg_lb" {
+  name               = "asg-lb"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [var.sg_alb_id]
+  subnets            = [var.public_1_subnet_id, var.public_2_subnet_id]
+
+  tags = {
+    Name    = "ASG-Load-Balancer"
+    project = "rjhxa_gsg"
+  }
+}
+
+resource "aws_lb_listener" "asg_listener" {
+  load_balancer_arn = aws_lb.asg_lb.arn
+  port              = 80
+  protocol          = "HTTP"
+
+  default_action {
+    type             = "forward"
+    target_group_arn = aws_lb_target_group.asg_target_group.arn
+  }
+}
+
 resource "aws_lb_target_group" "asg_target_group" {
   name     = "asg-target-group"
   port     = 80
@@ -38,8 +62,8 @@ resource "aws_autoscaling_group" "asg" {
   min_size            = 1
   max_size            = 2
   vpc_zone_identifier = [
-    var.private_1_subnet_id,
-    var.private_2_subnet_id
+    var.public_1_subnet_id,
+    var.public_2_subnet_id
   ]
   target_group_arns   = [aws_lb_target_group.asg_target_group.arn]
 
